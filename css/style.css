@@ -1,0 +1,22 @@
+.container{
+    background-color: #ccff66;
+    height: 500px;
+    width: 500px;
+    margin: 0px auto;
+}
+
+.margin {
+  margin: 5px 0 0 25px;
+}
+
+.cell {
+  float: left;
+  height: 50px;
+  width: 50px;
+  box-sizing: border-box;
+  border: 1px solid lightblue;
+}
+
+.cell:hover{
+  border: 1px solid black;
+}
