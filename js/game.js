@@ -10,11 +10,24 @@ function Game() {
     }    
   }
 
+  this.nodesPlayer1 = [];
   
 }
+
+Game.prototype.pickNode = function(node){
+    
+    
+};
 
 $(document).ready(function() {
   game = new Game();
 
+    $(".cell").on('click', function(){
+
+        $(this).addClass('cell-player1');
+        //console.log($(this)[0]);
+        
+
+    });
 
 });

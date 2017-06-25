@@ -20,3 +20,11 @@
 .cell:hover{
   border: 1px solid black;
 }
+
+.blocked{
+  pointer-events: none;
+}
+
+.cell-player1{
+    background-color: lightseagreen;
+}
