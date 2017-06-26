@@ -1,8 +1,28 @@
 .container{
+  margin: 0 auto;
+}
+
+.board{
     background-color: #ccff66;
     height: 500px;
-    width: 500px;
-    margin: 0px auto;
+    width: 300px;
+    margin: 0px auto;    
+}
+
+.turn1{
+  position: absolute;
+  top: 50px;
+  left: 200px;
+}
+
+.turn2{
+  position: absolute;
+  top: 50px;
+  right: 200px;
+}
+
+.blocked{
+  pointer-events: none;
 }
 
 .margin {
