@@ -11,8 +11,8 @@
 
 .cell {
   float: left;
-  height: 50px;
-  width: 50px;
+  height: 100px;
+  width: 100px;
   box-sizing: border-box;
   border: 1px solid lightblue;
 }
@@ -26,5 +26,5 @@
 }
 
 .player1{
-    background-color: lightseagreen;
+  background-color: lightseagreen;
 }
