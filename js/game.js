@@ -1,6 +1,6 @@
 function Game() {
 
-    this.board = [];
+    this.action = null;    
     this.turn = 1;    
 
     for (var row = 0; row < 5; row++) {
@@ -18,63 +18,69 @@ function Game() {
         }    
     }
 
+    this.setEventListeners();
+
 }
 
-Game.prototype.setEvents = function() {
+Game.prototype.setEventListeners = function() {
+     
+     // Use this and that to prevent lose the context inside
+     var that = this;
+
+     $(".cell").on('click', function(){
     
-    
+        if (that.action === 'expand'){
+            
+            if (that.turn === 1){ $(this).addClass('player1'); } 
+            else { $(this).addClass('player2'); }
+
+            $(this).attr( "player", game.turn);   
+            $(this).attr( "troops", 1);    
+            
+            ($(this)[0].children[0]).innerHTML = $(this).attr('troops');
+            
+            console.log('-------------- EXPAND --------------');        
+            console.log($(this)[0]);        
+            console.log("data-row: " + $(this).attr('data-row'));        
+            console.log("data-col: " + $(this).attr('data-col'));
+            console.log("troops: "   + $(this).attr('troops'));              
+            console.log("Player turn: " + that.turn);
+            console.log('------------------------------------');
+
+            // Disable board events until Player click next turn        
+            $(".board").addClass('blocked');
+
+        } else if (that.action === 'troops'){
+
+            console.log('----------- MORE TROOPS ------------');
+            var troops = parseInt($(this).attr('troops'));            
+            console.log("The player " + $(this).attr('player') + " have : " + troops + " units of troops");
+            // console.log("moreTroops game turn: " + that.turn);
+            console.log("The Player: " + $(this).attr('player') + " its equal to turn " + that.turn);
+            console.log("this is the troops value parsed Integer " + troops);
+            if ($(this).attr('player') == that.turn){  
+                console.log("troops before increase: " + troops);
+                troops += 3; 
+                console.log("troops after increase: " + troops);                           
+                $(this).attr('troops', troops); 
+                $(this)[0].children[0].innerHTML = troops;                
+            } else {
+                alert("This Node is not yours!");
+            }
+            console.log('-------- END MORE TROOPS ------------');
+
+            $(".board").addClass('blocked');
+        }
+     });
 
 }
 
 Game.prototype.moreTroops = function(){    
-
-    $(".cell").on('click', function(){
-
-        var troops = $(this).attr('troops');
-        console.log('----------- MORE TROOPS ------------');
-        console.log("troops: " + troops);
-        console.log("moreTroops game turn: " + game.turn);
-        console.log("attr Player: " + $(this).attr('player'))
-                
-        if ($(this).attr('player') == game.turn){            
-            troops += 3;            
-            console.log("next is the attr troops");
-            $(this).attr('troops', troops);            
-            console.log($(this).attr('troops', troops));            
-        } else {
-            alert("This Node is not yours!");
-        }
-
-        console.log('-------- END MORE TROOPS ------------');
-        $(".board").addClass('blocked');
-
-    });
+    this.action = 'troops';
 };
 
 Game.prototype.expand = function(){
-    
-    $(".cell").on('click', function(){        
-
-        if (game.turn === 1){ $(this).addClass('player1'); } 
-        else { $(this).addClass('player2'); }
-
-        $(this).attr( "player", game.turn);   
-        $(this).attr( "troops", 1);    
-        
-        ($(this)[0].children[0]).innerHTML = $(this).attr('troops');
-        
-        console.log('-------------- EXPAND --------------');        
-        console.log($(this)[0]);        
-        console.log("data-row: " + $(this).attr('data-row'));        
-        console.log("data-col: " + $(this).attr('data-col'));
-        console.log("troops: "   + $(this).attr('troops'));              
-        console.log("Player turn: " + game.turn);
-        console.log('------------------------------------');
-
-        // Disable board events until Player click next turn        
-        $(".board").addClass('blocked');
-
-    });
+    this.action = 'expand';
 };
 
 Game.prototype.swapTurns = function(){
