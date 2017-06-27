@@ -7,28 +7,29 @@
         <link href="css/style.css" rel="stylesheet">
     </head>
     <body>
-        <div class="container">
-            <div class="turn1">
-                <h1>Player1</h1>
-                <input type="button" id="expand" value="Expand">
-                <input type="button" id="troops" value="More Troops">
-                <input type="button" id="conquer" value="Conquer">
+        <div class="wrapper">
+            <div class="container">
+                <div class="turn1">
+                    <h1>Player1</h1>
+                    <input type="button" id="expand"  class="button" value="Expand">
+                    <input type="button" id="troops"  class="button" value="More Troops">
+                    <input type="button" id="conquer" class="button" value="Conquer">
+                </div>
+
+                <div class="board">                
+                </div>
+
+                <div class="turn2">
+                    <h1>Player2</h1>
+                    <input type="button" id="expand"  class="button" value="Expand">
+                    <input type="button" id="troops"  class="button" value="More Troops">
+                    <input type="button" id="conquer" class="button" value="Conquer">
+                </div>
+            
             </div>
 
-            <div class="board">                
-            </div>
-
-            <div class="turn2">
-                <h1>Player2</h1>
-                <input type="button" id="expand" value="Expand">
-                <input type="button" id="troops" value="More Troops">
-                <input type="button" id="conquer" value="Conquer">
-            </div>
-        
+            <input type="button" id="nextTurn" class="nextTurn" value="Next Turn">
         </div>
-
-        <input type="button" id="nextTurn" value="Next Turn">
-        
     
     </body>
 

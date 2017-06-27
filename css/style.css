@@ -1,10 +1,21 @@
+html{
+  background-color: #f6ecf8;
+}
+.wrapper{
+  position: relative;
+  height: 100%;
+  width: 770px;
+  margin: 0 auto;
+}
+
+
 .container{
   margin: 0 auto;
 }
 
 .board{
     background-color: #ccff66;
-    height: 500px;
+    height: 400px;
     width: 300px;    
     position: absolute;
     top: 150px; 
@@ -12,16 +23,51 @@
     margin: 0px auto;
 }
 
+.button {
+    background-color: #03A9F4;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    width: 150px;
+}
+
 .turn1{
   position: absolute;
-  top: 20px;
-  left: 200px;
+  top: 120px;
+  left: 50px;
+  width: 50px;
 }
 
 .turn2{
   position: absolute;
-  top: 20px;
-  right: 200px;
+  top: 120px;
+  right: 160px;
+  width: 50px;
+}
+
+.nextTurn{
+  position: absolute;
+  top: 70px;
+  left: 305px;
+  width: 50px;
+
+  background-color: lightslategray;
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  width: 150px;
 }
 
 .blocked{
@@ -37,11 +83,11 @@
   height: 100px;
   width: 100px;
   box-sizing: border-box;
-  border: 1px solid lightblue;
+  border: 1px solid  #E1BEE7;
 }
 
 .cell:hover{
-  border: 1px solid black;
+  border: 1px solid #7B1FA2;
 }
 
 .blocked{

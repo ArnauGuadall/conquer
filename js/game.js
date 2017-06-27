@@ -3,7 +3,7 @@ function Game() {
     this.action = null;    
     this.turn = 1;    
 
-    for (var row = 0; row < 5; row++) {
+    for (var row = 0; row < 4; row++) {
         for (var col = 0; col < 3; col++) {
             $('.board').append($('<div>')
                 .addClass('cell')
