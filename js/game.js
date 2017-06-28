@@ -13,13 +13,11 @@ function Game() {
                 .attr('troops', 0)
                 .append($('<h1>')
                 .addClass('h1-class'))
-            );  
-                    
+            );                      
         }    
     }
 
     this.setEventListeners();
-
 }
 
 Game.prototype.setEventListeners = function() {
@@ -45,7 +43,7 @@ Game.prototype.setEventListeners = function() {
             console.log("data-col: " + $(this).attr('data-col'));
             console.log("troops: "   + $(this).attr('troops'));              
             console.log("Player turn: " + that.turn);
-            console.log('------------------------------------');
+            console.log('------------ END EXPAND -------------');
 
             // Disable board events until Player click next turn        
             $(".board").addClass('blocked');
@@ -55,9 +53,7 @@ Game.prototype.setEventListeners = function() {
             console.log('----------- MORE TROOPS ------------');
             var troops = parseInt($(this).attr('troops'));            
             console.log("The player " + $(this).attr('player') + " have : " + troops + " units of troops");
-            // console.log("moreTroops game turn: " + that.turn);
-            console.log("The Player: " + $(this).attr('player') + " its equal to turn " + that.turn);
-            console.log("this is the troops value parsed Integer " + troops);
+                                    
             if ($(this).attr('player') == that.turn){  
                 console.log("troops before increase: " + troops);
                 troops += 3; 
@@ -67,10 +63,89 @@ Game.prototype.setEventListeners = function() {
             } else {
                 alert("This Node is not yours!");
             }
-            console.log('-------- END MORE TROOPS ------------');
+            console.log('--------- END MORE TROOPS -----------');
 
             $(".board").addClass('blocked');
+
+        }else if (that.action === 'conquer'){
+
+            var attackerArray = [];
+            var deffenderArray = [];            
+            var attackerClicked = false;
+
+            if (!attackerClicked){
+                console.log('------------- CONQUER ---------------');
+                var attackerRow = parseInt($(this).attr('data-row'));
+                console.log("Row: " + attackerRow);
+                var attackerCol = parseInt($(this).attr('data-col'));
+                console.log("Col: " + attackerCol);
+                var attackerPlayer = parseInt($(this).attr('player'));
+                console.log("Player: " + attackerPlayer);
+                var attackerTroops = parseInt($(this).attr('troops'));
+                console.log("Player troops: " + attackerTroops);
+                console.log('----------- END CONQUER--------------');
+
+                attackerClicked = true;
+                
+                for (var i = 0; i<attackerTroops; i++){
+                    attackerArray.push(Math.floor(Math.random() * 6) + 1);                    
+                }
+                
+                attackerArray.sort();
+
+            } else{                
+                
+                console.log('------------------------------------');
+                var defenderRow = parseInt($(this).attr('data-row'));
+                console.log("Row: " + defenderRow);
+                var defenderCol = parseInt($(this).attr('data-col'));
+                console.log("Col: " + defenderCol);
+                var defenderPlayer = parseInt($(this).attr('player'));
+                console.log("Player: " + defenderPlayer);
+                var defenderTroops = parseInt($(this).attr('troops'));
+                console.log("Player troops: " + defenderTroops);
+                console.log('------------------------------------');
+                        
+                for (var i = 0; i<deffenderArray; i++){
+                    deffenderArray.push(Math.floor(Math.random() * 6) + 1);                    
+                }
+
+                deffenderArray.sort();                
+
+                //$(".board").addClass('blocked');
+            }   
+
+            var timesLoop;
+            if(attackerArray.length <= deffenderArray.length){
+                timesLoop = attackerArray.length;
+            } else{
+                timesLoop = deffenderArray.length;
+            }
+
+            for (var j = timesLoop; j<0; j--){
+                if (attackerArray[j] >= deffenderArray[j]){
+                    
+                }
+            }
+
+
+            // is attackerClicked set
+            // if not set attackerClicked to the current cell
+            //    tell the user to pick another cell
+            // else
+            //  check if clicking the same cell
+            //  do your logic
+            // attackerClicked is false
+
+
+            
+            
+
+                                 
+
+            // $(".board").addClass('blocked');
         }
+
      });
 
 }
@@ -81,6 +156,10 @@ Game.prototype.moreTroops = function(){
 
 Game.prototype.expand = function(){
     this.action = 'expand';
+};
+
+Game.prototype.conquer = function(){
+    this.action = 'conquer';
 };
 
 Game.prototype.swapTurns = function(){
@@ -115,10 +194,6 @@ Game.prototype.swapTurns = function(){
             game.turn = 1;            
         }
 
-        console.log('----------- SWAP TURNS -------------');
-        console.log("next turn it will be player2? : " + game.turn);
-        console.log('------------------------------------');
-
         game.play();
         
     });
@@ -152,8 +227,9 @@ Game.prototype.play = function(){
             $(".turn1 #conquer").prop( "disabled", true );
         });
 
-        $(".turn1 #conquer").on('click', function(){            
-                   
+        $(".turn1 #conquer").on('click', function(){       
+            $(".board").removeClass('blocked');      
+            game.conquer(); 
             $(".turn1 #expand"). prop( "disabled", true );
             $(".turn1 #troops"). prop( "disabled", true );
             $(".turn1 #conquer").prop( "disabled", true );
@@ -170,7 +246,7 @@ Game.prototype.play = function(){
 
         $(".turn2 #expand").on('click', function(){  
             $(".board").removeClass('blocked');                  
-            game.expand(this.turn);
+            game.expand();
             $(".turn2 #expand"). prop( "disabled", true );
             $(".turn2 #troops"). prop( "disabled", true );
             $(".turn2 #conquer").prop( "disabled", true );
@@ -184,8 +260,9 @@ Game.prototype.play = function(){
             $(".turn2 #conquer").prop( "disabled", true );
         });
 
-        $(".turn2 #conquer").on('click', function(){            
-                       
+        $(".turn2 #conquer").on('click', function(){      
+            $(".board").removeClass('blocked');       
+            game.conquer();         
             $(".turn2 #expand"). prop( "disabled", true );
             $(".turn2 #troops"). prop( "disabled", true );
             $(".turn2 #conquer").prop( "disabled", true );

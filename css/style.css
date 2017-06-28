@@ -37,6 +37,21 @@ html{
     width: 150px;
 }
 
+.button:active {
+  background-color: #35befd;
+  transform: translateY(1px);
+}
+
+.button:disabled{
+  border: 1px solid #999999;
+  background-color: #cccccc;
+  color: #666666;
+}
+
+.button-disabled {
+    background-color: lightgrey;    
+}
+
 .turn1{
   position: absolute;
   top: 120px;
@@ -54,10 +69,8 @@ html{
 .nextTurn{
   position: absolute;
   top: 70px;
-  left: 305px;
-  width: 50px;
-
-  background-color: lightslategray;
+  left: 305px;  
+  background-color: #03A9F4;
   border: none;
   color: white;
   padding: 15px 32px;
@@ -68,6 +81,11 @@ html{
   margin: 4px 2px;
   cursor: pointer;
   width: 150px;
+}
+
+.nextTurn:active {
+  background-color: #e0e0d1;
+  transform: translateY(1px);
 }
 
 .blocked{
