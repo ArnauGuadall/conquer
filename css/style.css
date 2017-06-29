@@ -54,14 +54,14 @@ html{
 
 .turn1{
   position: absolute;
-  top: 120px;
+  top: 130px;
   left: 50px;
   width: 50px;
 }
 
 .turn2{
   position: absolute;
-  top: 120px;
+  top: 130px;
   right: 160px;
   width: 50px;
 }
