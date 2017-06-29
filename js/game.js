@@ -2,7 +2,8 @@ function Game() {
 
     this.action = null;    
     this.turn = 1;    
-    this.attackerClicked = 1;
+    this.attackerArray = []; //
+    this.defenderArray = []; //
 
     for (var row = 0; row < 4; row++) {
         for (var col = 0; col < 3; col++) {
@@ -25,6 +26,7 @@ Game.prototype.setEventListeners = function() {
      
      // Use this and that to prevent lose the context inside
      var that = this;
+     attackerClicked = true;
 
      $(".cell").on('click', function(){
     
@@ -48,6 +50,7 @@ Game.prototype.setEventListeners = function() {
 
             // Disable board events until Player click next turn        
             $(".board").addClass('blocked');
+            
 
         } else if (that.action === 'troops'){
 
@@ -69,16 +72,13 @@ Game.prototype.setEventListeners = function() {
             $(".board").addClass('blocked');
 
         }else if (that.action === 'conquer'){
-
-            var attackerArray = [];
-            var defenderArray = [];            
-            
-
-            if (this.attackerClicked === 1){
+                                
+            if (attackerClicked){                
+                that.superAttacker = this;
                 console.log('------------- CONQUER ---------------');
-                var attackerRow = parseInt($(this).attr('data-row'));
+                attackerRow = parseInt($(this).attr('data-row'));
                 console.log("Row: " + attackerRow);
-                var attackerCol = parseInt($(this).attr('data-col'));
+                attackerCol = parseInt($(this).attr('data-col'));
                 console.log("Col: " + attackerCol);
                 attackerPlayer = parseInt($(this).attr('player'));
                 console.log("Player: " + attackerPlayer);
@@ -86,19 +86,22 @@ Game.prototype.setEventListeners = function() {
                 console.log("Player troops: " + attackerTroops);
                 console.log('----------- END CONQUER--------------');
 
-                this.attackerClicked = 0;
+                this.attackerClicked = true;
                 
                 for (var i = 0; i<attackerTroops; i++){
-                    attackerArray.push(Math.floor(Math.random() * 6) + 1);                    
-                }                                
+                    game.attackerArray.push(Math.floor(Math.random() * 6) + 1);                    
+                }    
 
-            } else{   
-                this.attackerClicked = 1;             
+                attackerClicked = false;                            
+
+            } else{ 
+
+                attackerClicked = true;            
                 there = this;
                 console.log('------------------------------------');
-                var defenderRow = parseInt($(there).attr('data-row'));
+                defenderRow = parseInt($(there).attr('data-row'));
                 console.log("Row: " + defenderRow);
-                var defenderCol = parseInt($(there).attr('data-col'));
+                defenderCol = parseInt($(there).attr('data-col'));
                 console.log("Col: " + defenderCol);
                 defenderPlayer = parseInt($(there).attr('player'));
                 console.log("Player: " + defenderPlayer);
@@ -107,90 +110,132 @@ Game.prototype.setEventListeners = function() {
                 console.log('------------------------------------');
                         
                 for (var x = 0; x<defenderTroops; x++){
-                    defenderArray.push(Math.floor(Math.random() * 6) + 1);                    
+                    game.defenderArray.push(Math.floor(Math.random() * 6) + 1);                    
                 }
 
-                attArray = attackerArray.sort();
-                console.log("how many iterations attacker has? " + attArray);
+                game.attackerArray.sort(function(a,b){
+                    return a < b;
+                });
+
+                console.log("how many iterations attacker has? " + game.attackerArray.length);
                 
-                defArray = defenderArray.sort();                
-                console.log("how many iterations defender has? " + defArray);
+                game.defenderArray.sort(function(a,b){
+                    return a < b;
+                });               
+                console.log("how many iterations defender has? " + game.defenderArray.length);
 
-            var timesLoop;
+                var timesLoop;
 
-            if(attArray.length <= defArray.length){
-                timesLoop = attArray.length;
-                console.log("attackerArray has " + timesLoop + " length");
-            } else{
-                timesLoop = defArray.length;
-                console.log("defenderArray has " + timesLoop + " length");
-            }
-
-            console.log('-------- BATTLE SIMULATOR-----------');            
-            
-            console.log("timesLoop: " + timesLoop);
-
-            for (var j = timesLoop; j<0; j--){                
-                if (attackerArray[j] >= defenderArray[j]){
-                    defenderTroops--;
-                    console.log("Attacker wins");
-                    console.log("defender troops: " + defenderTroops);
+                if(game.attackerArray.length <= game.defenderArray.length){
+                    timesLoop = game.attackerArray.length;
+                    console.log("attackerArray has " + timesLoop + " length");
                 } else{
-                    attackerTroops--;
-                    console.log("Defender wins");
-                    console.log("attacker troops: " + attackerTroops);
+                    timesLoop = game.defenderArray.length;
+                    console.log("defenderArray has " + timesLoop + " length");
                 }
-            }
-            console.log('------------------------------------');
 
-            if (attackerTroops <= 0){                
-                if (attackerPlayer === 1){
-                    $(this).addClass('player2');
-                    $(this).removeClass('player1');
-                    $(this).attr( "player", defenderPlayer);   
-                    $(this).attr( "troops", 1); // half of the defense army
-                } else {
-                    $(this).addClass('player1');
-                    $(this).removeClass('player2');
-                    $(this).attr( "player", defenderPlayer);   
-                    $(this).attr( "troops", 1); // half of the defense army
-                }                                
-            }
+                console.log('-------- BATTLE SIMULATOR-----------');            
+                
+                console.log("timesLoop: " + timesLoop);
 
-            if (defenderTroops <= 0){                
-                if (defenderPlayer === 1){
-                    $(there).addClass('player2');
-                    $(there).removeClass('player1');
-                    $(there).attr( "player", attackerPlayer);   
-                    $(there).attr( "troops", 1); // half of the defense army
-                } else if (defenderPlayer === 2){
-                    $(there).addClass('player1');
-                    $(there).removeClass('player2');
-                    $(there).attr( "player", attackerPlayer);   
-                    $(there).attr( "troops", 1); // half of the defense army
+                for (var j = 0; j<timesLoop; j++){                
+                    if (game.attackerArray[j] >= game.defenderArray[j]){
+                        defenderTroops--;
+                        
+                        $(this).attr( "troops", defenderTroops);
+                        $(this)[0].children[0].innerHTML = $(this).attr('troops');
+                        console.log("Attacker wins");
+                        console.log("defender troops: " + defenderTroops);
+                    } else{
+                        attackerTroops--;
+                        $(there).attr( "troops", attackerTroops);
+                        $(there)[0].children[0].innerHTML = $(there).attr('troops');
+                        console.log("Defender wins");
+                        console.log("attacker troops: " + attackerTroops);
+                    }
                 }
-            }
+                console.log('------------------------------------');
+
+                if (attackerTroops <= 0){                
+                    if (attackerPlayer === 1){
+
+                        $(this).addClass('player2');
+                        $(this).removeClass('player1');
+                        $(this).attr( "player", defenderPlayer);   
+                        // $(this).attr( "troops", 1); // half of the defense army
+                        // $(this)[0].children[0].innerHTML = $(this).attr('troops');
+                    } else {
+                        
+                        $(this).addClass('player1');
+                        $(this).removeClass('player2');
+                        $(this).attr( "player", defenderPlayer);   
+                        // $(this).attr( "troops", 1); // half of the defense army
+                        // $(this)[0].children[0].innerHTML = $(this).attr('troops');
+                    }                                
+                }
+
+                if (defenderTroops <= 0){                
+                    if (defenderPlayer === 1){
+
+                        $(there).addClass('player2');
+                        $(there).removeClass('player1');
+                        $(there).attr( "player", attackerPlayer); 
+
+                        if (defenderTroops === 1){
+                            $(this).attr('troops', 1); 
+                            $(this)[0].children[0].innerHTML = 1;
+                        } else{
+                            var dividedDef = defenderTroops / 2;                            
+                            $(this).attr('troops', Math.floor(dividedDef)); 
+                            $(this)[0].children[0].innerHTML = Math.floor(dividedDef);
+                            
+                            if (defenderTroops % 2 === 0){
+                                $(game.superAttacker)[0].children[0].innerHTML = Math.floor(dividedAtt);    
+                            }else{                        
+                                $(game.superAttacker)[0].children[0].innerHTML = Math.floor(dividedAtt+1);
+                            }
+
+                            $(there).attr('troops', Math.floor(dividedDef)+1); 
+                            $(there)[0].children[0].innerHTML = Math.floor(dividedDef+1);
+                        }
+                        
+
+                    } else if (defenderPlayer === 2){
+                        $(there).addClass('player1');
+                        $(there).removeClass('player2');
+                        $(there).attr( "player", attackerPlayer); 
+
+                        if (attackerTroops === 1){
+                            $(there).attr('troops', 1); 
+                            $(there)[0].children[0].innerHTML = 1;
+                        } else{
+
+                            dividedAtt = attackerTroops / 2;                            
+                            $(there).attr('troops', Math.floor(dividedAtt)); 
+                            $(there)[0].children[0].innerHTML = Math.floor(dividedAtt); 
+                               
+                            if (attackerTroops % 2 === 0){
+                                $(game.superAttacker)[0].children[0].innerHTML = Math.floor(dividedAtt); 
+                                $(game.superAttacker).attr('troops', Math.floor(dividedAtt));   
+                            }else{                        
+                                $(game.superAttacker)[0].children[0].innerHTML = Math.floor(dividedAtt+1);
+                                $(game.superAttacker).attr('troops', Math.floor(dividedAtt));   
+                            }
+                            
+                        }
+
+                    }
+
+                    // reset the array
+                    attackerArray = [];
+                    defenderArray = [];
+                }
 
                 
                 //$(".board").addClass('blocked');
             }   
             
             
-
-
-
-            // is attackerClicked set
-            // if not set attackerClicked to the current cell
-            //    tell the user to pick another cell
-            // else
-            //  check if clicking the same cell
-            //  do your logic
-            // attackerClicked is false
-
-
-            
-            
-
                                  
 
             // $(".board").addClass('blocked');
