@@ -1,87 +1,178 @@
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body{
+  min-height: 100%;  
+}
+
+body{
+  font-size: 16px;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+h1 {
+  font-family: 'Anton', sans-serif;
+  font-size: 80px;
+  font-size: 5rem;
+  margin-bottom: .4em;
+  color: rgba(13,33,2,.8);
+}
+
+h2 {
+  font-family: 'Raleway', sans-serif;
+  margin-bottom: 1em;
+  font-size: 32px;
+  font-size: 2rem;
+}
+
+h1,
+h2 {
+  text-align: center;
+}
+
+
 html{
   background-color: #f6ecf8;
 }
 .wrapper{
-  position: relative;
-  height: 100%;
-  width: 770px;
-  margin: 0 auto;
+  height: 100vh;
+  width: 100%;
+  padding: 2em;
+  background-image: url('https://andrewharvey4.files.wordpress.com/2012/10/srtm3-1.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
 }
 
 
 .container{
+   display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  align-content: center;
+  align-items: flex-start;
+  max-width: 800px;
   margin: 0 auto;
 }
 
-.board{
-    background-color: #ccff66;
-    height: 400px;
-    width: 300px;    
-    position: absolute;
-    top: 150px; 
-    left: 30%;   
-    margin: 0px auto;
+.container > div {
+    order: 0;
+    flex: 0 1 auto;
+    align-self: auto;
+    padding: 1em 2em;
+}
+
+.container > div:nth-child(2) {
+  flex: 2 1 auto;
+  padding-top: 0; 
+}
+
+.turn1 {
+  background-color: rgba(13,79,150, .8);
+  /*color: rgba(4,25,47,.8);*/
+  color: white;
+}
+
+.turn2 {
+  background-color: rgba(150,13,18, .8);
+  /*color: rgba(64,6,8,.8);*/
+  color: white;
+}
+
+.cell.player1{
+  background-color: rgba(13,79,150, .75);
+}
+
+.cell.player2{
+  background-color: rgba(150,13,18, .75);
+}
+
+.cell h2 {
+  margin-bottom: 0;
 }
 
 .button {
-    background-color: #03A9F4;
     border: none;
     color: white;
-    padding: 15px 32px;
+    padding: 1em 2em;
     text-align: center;
     text-decoration: none;
-    display: inline-block;
+    display: block;
     font-size: 16px;
-    margin: 4px 2px;
+    margin: 0 auto;
     cursor: pointer;
     width: 150px;
+    transition: all 200ms ease-in;
 }
+
+.turn1 .button {
+  background-color: rgba(3,43,86, 1);
+  border: 1px solid rgba(4,25,47,.8);
+}
+
+.turn2 .button {
+  background-color: rgba(94,14,16, 1);
+  border: 1px solid rgba(51, 4,6,.8);
+}
+
+.turn1 .button:hover {
+  background-color: rgba(66,145,230, 1);
+}
+
+.turn2 .button:hover {
+  background-color: rgba(204,8,8, 1);
+}
+
+.turn1 .button,
+.turn2 .button,
+.turn1 .button:hover,
+.turn2 .button:hover {
+   color: white;
+}
+
 
 .button:active {
   background-color: #35befd;
   transform: translateY(1px);
 }
 
-.button:disabled{
+.button:disabled,
+.button:hover:disabled {
   border: 1px solid #999999;
   background-color: #cccccc;
   color: #666666;
+  cursor: not-allowed;
 }
 
 .button-disabled {
     background-color: lightgrey;    
 }
 
-.turn1{
-  position: absolute;
-  top: 130px;
-  left: 50px;
-  width: 50px;
-}
-
-.turn2{
-  position: absolute;
-  top: 130px;
-  right: 160px;
-  width: 50px;
-}
-
 .nextTurn{
-  position: absolute;
-  top: 70px;
-  left: 305px;  
-  background-color: #03A9F4;
-  border: none;
+  border: 1px rgba(165,226,154,1);
   color: white;
-  padding: 15px 32px;
+  padding: 1em 2em;
   text-align: center;
   text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
+  display: block;
+  margin: 0 auto;
   cursor: pointer;
-  width: 150px;
+  width: 300px;
+  background-color: rgba(13,33,2,.8);
+  transition: all 200ms ease-in-out;
+  font-size: 24px;
+  font-size: 1.5rem;
 }
+
+.nextTurn:hover {
+  background-color: rgba(32,78, 6,.8);
+}
+
 
 .nextTurn:active {
   background-color: #e0e0d1;
@@ -96,31 +187,41 @@ html{
   margin: 5px 0 0 25px;
 }
 
+
+.board{
+    height: 400px;
+    width: 300px;
+    margin: 0px auto;
+    box-shadow: 10px 15px 30px 0px rgba(0,0,0,0.45);
+}
+
+
 .cell {
   float: left;
+  position: relative;
   height: 100px;
   width: 100px;
   box-sizing: border-box;
-  border: 1px solid  #E1BEE7;
+  /*border: 1px solid  #E1BEE7;*/
+  border: 2px solid rgba(0,0,0, .1);
+  background-color: rgba(255,255,255, .45);
+  transition: border 200ms ease-in;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .cell:hover{
-  border: 1px solid #7B1FA2;
+  border: 2px solid rgba(125,47,124, .68);
+  cursor: pointer;
 }
 
 .blocked{
   pointer-events: none;
 }
 
-.player1{
-  background-color: lightseagreen;
-}
-
-.player2{
-  background-color: lightcoral;
-}
-
-.h1-class{
-  color: black;  
-  margin: 30px 0 0 40px;
+.h2-class{
+  color: white;
+  font-size: 48px;
+  font-size: 3rem;
 }

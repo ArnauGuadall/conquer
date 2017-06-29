@@ -13,8 +13,8 @@ function Game() {
                 .attr('data-col', col)  
                 .attr('player', 0)              
                 .attr('troops', 0)
-                .append($('<h1>')
-                .addClass('h1-class'))
+                .append($('<h2>')
+                .addClass('h2-class'))
             );                      
         }    
     }
@@ -334,7 +334,7 @@ Game.prototype.play = function(){
     
     // player1 === 1
     if (this.turn === 1){
-        $(".turn1 h1 .animated").addClass('pulse');
+        $(".turn1 h2 .animated").addClass('pulse');
         $(".turn1 #expand") .prop( "disabled", false);
         $(".turn1 #troops") .prop( "disabled", false);
         $(".turn1 #conquer").prop( "disabled", false);
@@ -368,7 +368,7 @@ Game.prototype.play = function(){
 
     } else if (this.turn === 2){
 
-        $(".turn2 h1 .animated").addClass('pulse');
+        $(".turn2 h2 .animated").addClass('pulse');
                
         $(".turn1 #expand") .prop( "disabled", true);
         $(".turn1 #troops") .prop( "disabled", true);
@@ -411,9 +411,9 @@ $(document).ready(function() {
     game = new Game(); 
     
     // var player1 = prompt("Name of Player 1");
-    // $(".turn1 h1").text(player1);;
+    // $(".turn1 h2").text(player1);;
     // var player2 = prompt("Name of Player 2");
-    // $(".turn2 h1").text(player2);
+    // $(".turn2 h2").text(player2);
     $(".animated").addClass('pulse');
 
     game.play();

@@ -5,30 +5,32 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">        
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+        <link href="https://fonts.googleapis.com/css?family=Anton" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet">
     </head>
     <body>
         <div class="wrapper">
-            <div class="container">
+            <h1>Conquer</h1>
+            <main class="container">
                 <div class="turn1">
-                    <h1 class="animated">Player1</h1>
-                    <input type="button" id="expand"  class="button" value="Expand">
-                    <input type="button" id="troops"  class="button" value="More Troops">
-                    <input type="button" id="conquer" class="button" value="Conquer">
+                    <h2 class="animated">Player 1</h2>
+                    <input type="button" id="expand"  class="button btn-expand" value="Expand">
+                    <input type="button" id="troops"  class="button btn-troops" value="More Troops">
+                    <input type="button" id="conquer" class="button btn-conquer" value="Conquer">
                 </div>
-
-                <div class="board">                
+                
+                <div>
+                    <section class="board"></section>
                 </div>
-
+                
                 <div class="turn2">
-                    <h1>Player2</h1>
-                    <input type="button" id="expand"  class="button" value="Expand">
-                    <input type="button" id="troops"  class="button" value="More Troops">
-                    <input type="button" id="conquer" class="button" value="Conquer">
+                    <h2>Player 2</h2>
+                    <input type="button" id="expand"  class="button btn-expand" value="Expand">
+                    <input type="button" id="troops"  class="button btn-troops" value="More Troops">
+                    <input type="button" id="conquer" class="button btn-conquer" value="Conquer">
                 </div>
-            
-            </div>
-
+            </main>
             <input type="button" id="nextTurn" class="nextTurn" value="Next Turn">
         </div>
     
