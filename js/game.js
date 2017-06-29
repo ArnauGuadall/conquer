@@ -98,6 +98,7 @@ Game.prototype.setEventListeners = function() {
 
                 attackerClicked = true;            
                 there = this;
+                that.superDefense = this;
                 console.log('------------------------------------');
                 defenderRow = parseInt($(there).attr('data-row'));
                 console.log("Row: " + defenderRow);
@@ -115,14 +116,11 @@ Game.prototype.setEventListeners = function() {
 
                 game.attackerArray.sort(function(a,b){
                     return a < b;
-                });
-
-                console.log("how many iterations attacker has? " + game.attackerArray.length);
+                });                
                 
                 game.defenderArray.sort(function(a,b){
                     return a < b;
-                });               
-                console.log("how many iterations defender has? " + game.defenderArray.length);
+                });                               
 
                 var timesLoop;
 
@@ -134,46 +132,84 @@ Game.prototype.setEventListeners = function() {
                     console.log("defenderArray has " + timesLoop + " length");
                 }
 
-                console.log('-------- BATTLE SIMULATOR-----------');            
-                
-                console.log("timesLoop: " + timesLoop);
+                console.log('-------- BATTLE SIMULATOR-----------');                                            
 
                 for (var j = 0; j<timesLoop; j++){                
                     if (game.attackerArray[j] >= game.defenderArray[j]){
                         defenderTroops--;
                         
                         $(this).attr( "troops", defenderTroops);
-                        $(this)[0].children[0].innerHTML = $(this).attr('troops');
+                        $(this)[0].children[0].innerHTML = defenderTroops;
                         console.log("Attacker wins");
                         console.log("defender troops: " + defenderTroops);
                     } else{
                         attackerTroops--;
                         $(there).attr( "troops", attackerTroops);
-                        $(there)[0].children[0].innerHTML = $(there).attr('troops');
+                        $(game.superAttacker)[0].children[0].innerHTML = attackerTroops;
                         console.log("Defender wins");
                         console.log("attacker troops: " + attackerTroops);
                     }
                 }
                 console.log('------------------------------------');
 
+                // When Defense Wins
                 if (attackerTroops <= 0){                
                     if (attackerPlayer === 1){
 
-                        $(this).addClass('player2');
-                        $(this).removeClass('player1');
-                        $(this).attr( "player", defenderPlayer);   
-                        // $(this).attr( "troops", 1); // half of the defense army
-                        // $(this)[0].children[0].innerHTML = $(this).attr('troops');
+                        $(game.superAttacker).addClass('player2');
+                        $(game.superAttacker).removeClass('player1');
+                        $(game.superAttacker).attr( "player", defenderPlayer);   
+                        
+                        if (attackerTroops === 1){
+
+                            $(this).attr('troops', 1); 
+                            $(this)[0].children[0].innerHTML = 1;
+
+                        } else{
+                            var dividedDef = defenderTroops / 2;                            
+                            $(game.superDefense).attr('troops', Math.floor(dividedDef)); 
+                            $(game.superDefense)[0].children[0].innerHTML = Math.floor(dividedDef);
+                            
+                            if (defenderTroops % 2 === 0){
+                                $(game.superAttacker)[0].children[0].innerHTML = Math.floor(dividedDef);    
+                            }else{                        
+                                $(game.superAttacker)[0].children[0].innerHTML = Math.floor(dividedDef+1);
+                            }
+                            
+                            $(game.superAttacker).attr('troops', Math.floor(dividedDef));   
+                        }
+
+
+
                     } else {
                         
                         $(this).addClass('player1');
                         $(this).removeClass('player2');
                         $(this).attr( "player", defenderPlayer);   
-                        // $(this).attr( "troops", 1); // half of the defense army
-                        // $(this)[0].children[0].innerHTML = $(this).attr('troops');
+                        
+                        if (attackerTroops === 1){
+
+                            $(this).attr('troops', 1); 
+                            $(this)[0].children[0].innerHTML = 1;
+
+                        } else{
+                            var dividedDef = defenderTroops / 2;                            
+                            $(this).attr('troops', Math.floor(dividedDef)); 
+                            $(this)[0].children[0].innerHTML = Math.floor(dividedDef);
+                            
+                            if (attackerTroops % 2 === 0){
+                                $(game.superAttacker)[0].children[0].innerHTML = Math.floor(dividedDef);    
+                            }else{                        
+                                $(game.superAttacker)[0].children[0].innerHTML = Math.floor(dividedDef+1);
+                            }
+                            
+                            $(game.superAttacker).attr('troops', Math.floor(dividedDef));   
+                        }
                     }                                
                 }
 
+
+                // When Attacker Wins
                 if (defenderTroops <= 0){                
                     if (defenderPlayer === 1){
 
@@ -182,21 +218,22 @@ Game.prototype.setEventListeners = function() {
                         $(there).attr( "player", attackerPlayer); 
 
                         if (defenderTroops === 1){
+
                             $(this).attr('troops', 1); 
                             $(this)[0].children[0].innerHTML = 1;
+
                         } else{
-                            var dividedDef = defenderTroops / 2;                            
-                            $(this).attr('troops', Math.floor(dividedDef)); 
-                            $(this)[0].children[0].innerHTML = Math.floor(dividedDef);
+                            var dividedAtt = attackerTroops / 2;                            
+                            $(this).attr('troops', Math.floor(dividedAtt)); 
+                            $(this)[0].children[0].innerHTML = Math.floor(dividedAtt);
                             
                             if (defenderTroops % 2 === 0){
                                 $(game.superAttacker)[0].children[0].innerHTML = Math.floor(dividedAtt);    
                             }else{                        
-                                $(game.superAttacker)[0].children[0].innerHTML = Math.floor(dividedAtt+1);
+                                $(game.superAttacker)[0].children[0].innerHTML = Math.floor(dividedAtt)+1;
                             }
-
-                            $(there).attr('troops', Math.floor(dividedDef)+1); 
-                            $(there)[0].children[0].innerHTML = Math.floor(dividedDef+1);
+                            
+                            $(game.superAttacker).attr('troops', Math.floor(dividedAtt));   
                         }
                         
 
@@ -206,8 +243,10 @@ Game.prototype.setEventListeners = function() {
                         $(there).attr( "player", attackerPlayer); 
 
                         if (attackerTroops === 1){
+
                             $(there).attr('troops', 1); 
                             $(there)[0].children[0].innerHTML = 1;
+
                         } else{
 
                             dividedAtt = attackerTroops / 2;                            
@@ -215,29 +254,26 @@ Game.prototype.setEventListeners = function() {
                             $(there)[0].children[0].innerHTML = Math.floor(dividedAtt); 
                                
                             if (attackerTroops % 2 === 0){
-                                $(game.superAttacker)[0].children[0].innerHTML = Math.floor(dividedAtt); 
-                                $(game.superAttacker).attr('troops', Math.floor(dividedAtt));   
+                                $(game.superAttacker)[0].children[0].innerHTML = Math.floor(dividedAtt);                                 
                             }else{                        
-                                $(game.superAttacker)[0].children[0].innerHTML = Math.floor(dividedAtt+1);
-                                $(game.superAttacker).attr('troops', Math.floor(dividedAtt));   
+                                $(game.superAttacker)[0].children[0].innerHTML = Math.floor(dividedAtt+1);                                
                             }
+
+                            $(game.superAttacker).attr('troops', Math.floor(dividedAtt)); 
                             
                         }
 
                     }
 
-                    // reset the array
-                    attackerArray = [];
-                    defenderArray = [];
+                    
                 }
 
-                
+                // reset the array
+                attackerArray = [];
+                defenderArray = [];
                 //$(".board").addClass('blocked');
-            }   
-            
-            
+            }               
                                  
-
             // $(".board").addClass('blocked');
         }
 
