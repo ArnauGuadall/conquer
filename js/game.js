@@ -22,6 +22,35 @@ function Game() {
     this.setEventListeners();
 }
 
+Game.prototype.checkWinner = function (){
+
+    var cPlayer1 = 0;
+    var cPlayer2 = 0;
+
+    for (var i = 0; i<12; i++){    
+        console.log($(".cell")[i]);
+        var player = parseInt($(".cell").attr("player"));
+        if (player === 1){
+            cPlayer1++;
+            console.log(cPlayer1);
+        }else if (player === 2){
+            cPlayer2++;
+            console.log(cPlayer2);
+        }        
+
+        if (cPlayer1 >= 12){
+            alert("Player 1 wins!");
+            return "Player 1 wins!";
+        }else if (cPlayer2 >= 12){
+            alert("Player 2 Wins!");
+            return "Player 2 Wins!";
+        }else{
+            return "not yet";
+        }
+    }
+
+}
+
 Game.prototype.setEventListeners = function() {
      
      // Use this and that to prevent lose the context inside
@@ -72,7 +101,11 @@ Game.prototype.setEventListeners = function() {
             $(".board").addClass('blocked');
 
         }else if (that.action === 'conquer'){
-                                
+
+            // reset the array
+            this.attackerArray = [];
+            this.defenderArray = []; 
+
             if (attackerClicked){                
                 that.superAttacker = this;
                 console.log('------------- CONQUER ---------------');
@@ -179,8 +212,6 @@ Game.prototype.setEventListeners = function() {
                             $(game.superAttacker).attr('troops', Math.floor(dividedDef));   
                         }
 
-
-
                     } else {
                         
                         $(this).addClass('player1');
@@ -264,19 +295,24 @@ Game.prototype.setEventListeners = function() {
                         }
 
                     }
-
                     
                 }
-
                 // reset the array
-                attackerArray = [];
-                defenderArray = [];
-                //$(".board").addClass('blocked');
-            }               
-                                 
-            // $(".board").addClass('blocked');
-        }
+                this.attackerArray = [];
+                this.defenderArray = [];                
+                
 
+                if (game.checkWinner() === "Player 1 wins!"){
+                    alert("Player 1 wins!");
+                } else if (game.checkWinner() === "Player 1 wins!"){                
+                    alert("Player 2 Wins!");   
+                };
+
+                //block the board until the user clicks next turn.
+                $(".board").addClass('blocked');
+                
+            }                                                            
+        }
      });
 
 }
