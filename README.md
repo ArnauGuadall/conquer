@@ -4,6 +4,8 @@
 
 Conquer it is a web browser game which runs in every computer. Not responsive design applied. The game it is Risk-like game that you have a board with cells in it and you have to Conquer all lands on the board to win the game by playing for turns. 
 
+Github Pages of Conquer Game --> [https://arnauguadall.github.io/conquer/]
+
 ![Conquer](https://image.ibb.co/dcbLOQ/Selection_006.png)
 
 ## How to play
