@@ -301,12 +301,12 @@ Game.prototype.setEventListeners = function() {
                 this.attackerArray = [];
                 this.defenderArray = [];                
                 
-
-                if (game.checkWinner() === "Player 1 wins!"){
-                    alert("Player 1 wins!");
-                } else if (game.checkWinner() === "Player 1 wins!"){                
-                    alert("Player 2 Wins!");   
-                };
+                // Winner implementation
+                // if (game.checkWinner() === "Player 1 wins!"){
+                //     alert("Player 1 wins!");
+                // } else if (game.checkWinner() === "Player 1 wins!"){                
+                //     alert("Player 2 Wins!");   
+                // };
 
                 //block the board until the user clicks next turn.
                 $(".board").addClass('blocked');
@@ -446,10 +446,10 @@ $(document).ready(function() {
         
     game = new Game(); 
     
-    // var player1 = prompt("Name of Player 1");
-    // $(".turn1 h2").text(player1);;
-    // var player2 = prompt("Name of Player 2");
-    // $(".turn2 h2").text(player2);
+    var player1 = prompt("Name of Player 1");
+    $(".turn1 h2").text(player1);;
+    var player2 = prompt("Name of Player 2");
+    $(".turn2 h2").text(player2);
     $(".animated").addClass('pulse');
 
     game.play();
